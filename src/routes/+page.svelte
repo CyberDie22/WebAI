@@ -137,7 +137,10 @@
 	})
 
 	const sendMessage = async () => {
+		let wasNewChat = false
 		if (onNewChat) {
+			wasNewChat = true
+			onNewChat = false
 			await createConversation()
 		}
 
@@ -161,15 +164,13 @@
 			await webChatGPT.askStream(sentMessage, () => {}).catch((e) => console.log(e))
 		}
 
-		if (onNewChat) {
+		if (wasNewChat) {
 			let generator = new AI.TitleGeneratorModel()
 			await generator.promptStream(message, (_, full) => {
 				full = full.trim()
 				if (full.startsWith("\"") && full.endsWith("\"")) full = full.substring(1, full.length - 1)
 				conversations[selectedConversationId].conversation.name = full
 			})
-
-			onNewChat = false
 		}
 	}
 
