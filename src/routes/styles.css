@@ -1,0 +1,10 @@
+.url-link {
+    text-decoration-line: underline;
+}
+
+#scroll-chatbox > div:last-child {
+    scroll-snap-align: end;
+}
+
+.ai-select-box {
+}
